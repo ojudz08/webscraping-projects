@@ -23,14 +23,11 @@
 </tr>
 <tr>
    <td>Reuters</td>
-   <td>Webscrape the latest news - World, Business and Markets</td>
+   <td>Webscrape the latest news - World, Business and Markets [To be updated]</td>
    <td><a class="externalLink" href="https://github.com/ojudz08/parse_pdf-projects/tree/main/parsePDFs01">newswebscrape</a></td>
 </tr>
 <tr>
-   <td>Parse PDF 2</td>
-   <td>[To update]</td>
-   <td><a class="externalLink" href="">link</a></td>
-</tr>
+
 </table>
 
 
