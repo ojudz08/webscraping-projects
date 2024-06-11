@@ -3,11 +3,7 @@
     Created on: May 10, 2021
     Modified on: September 23, 2023
     About:
-        <ONGOING PROJECT...>
-        Web scrape jobs and job details from efinancialcareers website 
-        for Accounting Finance category and save it into a file
-    Modification / Updates:
-        Re-coded script and created functions
+    
 """
 
 from bs4 import BeautifulSoup
