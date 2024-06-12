@@ -60,7 +60,7 @@ class jobScrape():
     
 
 if __name__ == '__main__':
-    url = "https://www.efinancialcareers.co.uk/sitemap/html#jobsBySector"
+    url = "https://www.efinancialcareers.co.uk/jobs/in-United-Kingdom"
 
     job_scrape = jobScrape(url)
     test = job_scrape.bySector()
