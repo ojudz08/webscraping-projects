@@ -5,7 +5,7 @@
 </div>
 
 <h2>About</h2>
-<p>Webscraping different websites</p>
+<p>Scraping data from different websites</p>
 
 
 <h2>Project Lists</h2>
@@ -18,13 +18,27 @@
 </tr>
 <tr>
    <td>eFinancialCareers</td>
-   <td>Scrape jobs posted in efinancialcareers - job title, company, location and position type</td>
-   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/jobwebscrape">jobwebscrape</a></td>
+   <td>Scrape the following job details posted in efinancialcareers for the last 3 days:
+   
+    - Job Title
+    - Company Name
+    - Location
+    - Position Type
+    - Work Arrangement
+    - Salary
+
+   </td>
+   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/efc_jobs">efc_jobs</a></td>
+</tr>
+<tr>
+   <td>Seek</td>
+   <td>Scrape data engineering jobs for the past week [To be updated]</td>
+   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/seek_jobs">seek_jobs</a></td>
 </tr>
 <tr>
    <td>Reuters</td>
    <td>Webscrape the latest news - World, Business and Markets [To be updated]</td>
-   <td><a class="externalLink" href="https://github.com/ojudz08/parse_pdf-projects/tree/main/parsePDFs01">newswebscrape</a></td>
+   <td><a class="externalLink" href=https://github.com/ojudz08/webscraping-projects/tree/main/reuters_news">reuters_news</a></td>
 </tr>
 <tr>
 
