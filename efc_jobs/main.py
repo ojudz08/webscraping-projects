@@ -60,7 +60,8 @@ class jobScrape():
 
             posted_on.append(item.find('efc-job-meta').text.lstrip().rstrip())
         
-        job_dct = {"Position": job_title, "Company": company, "Link": job_link, "Location": location, "Position Type": position_type, "Work Arrangement": work_arrangement, "Salary": salary, "Posted On": posted_on}
+        job_dct = {"Position": job_title, "Company": company, "Link": job_link, "Location": location, "Position Type": position_type,
+                   "Work Arrangement": work_arrangement, "Salary": salary, "Posted On": posted_on}
         final_df = pd.DataFrame(job_dct)
 
         return final_df
