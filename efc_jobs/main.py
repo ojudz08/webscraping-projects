@@ -54,7 +54,7 @@ class jobScrape():
             if ln1 == 6 and ln2 == 2:
                 work_arrangement.append(item.find_all('div')[1].find_all('span')[0].text)
                 salary.append(item.find_all('div')[1].find_all('span')[1].text)
-            elif ln1 == 5 and ln2 == 1:
+            elif (ln1 == 5 and ln2 == 1) or (ln1 == 7 and ln2 == 2):
                 work_arrangement.append(None)
                 salary.append(item.find_all('div')[1].find_all('span')[0].text)
 
@@ -71,7 +71,9 @@ class jobScrape():
 
 
 if __name__ == '__main__':
-    efc_url = "https://www.efinancialcareers.co.uk/jobs/in-United-Kingdom" 
+    efc_url = "https://www.efinancialcareers.co.uk/jobs/in-United-Kingdom"
+    
+    
 
     test = jobScrape(efc_url).first_page()
 
