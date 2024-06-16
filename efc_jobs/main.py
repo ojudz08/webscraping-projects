@@ -124,7 +124,7 @@ class jobScrape():
 
     def get_data(self):
         data_1st = self.first_page()
-        data_next = self.next_page()
+        #data_next = self.next_page()
 
         return data_1st
 
