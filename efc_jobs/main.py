@@ -14,10 +14,10 @@ import pandas as pd
 
 class jobScrape():
 
-    def __init__(self, hr_posted):
+    def __init__(self, time_now, hr_posted):
         self.url = "https://www.efinancialcareers.co.uk/jobs/in-United-Kingdom"
-        self.hr_posted = hr_posted
-        self.time_now = dt.datetime.now().astimezone(pytz.utc)
+        self.min_posted = hr_posted * 60
+        self.time_now = time_now
 
 
     def api_url(self, pg):
@@ -31,30 +31,23 @@ class jobScrape():
             else: url += val
 
             iter += 1
-
         return url
-    
+
 
     def parser(self):
         headers = headers={'User-agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0'}
         content = requests.get(self.url, headers).content
         soup = BeautifulSoup(content, "html.parser")
-
         return soup
 
 
     def job_card(self):
         soup = self.parser()
+        efc_jobcard = soup.find('efc-job-search-results').find_all('div', {'class': 'card-info'})
+        return efc_jobcard
     
-        efc_jobcard = soup.find('div', {'class': 'd-flex flex-column jobs-container ng-star-inserted'}).find_all('efc-job-card')
 
-        card_details = [card.find('efc-card-details') for card in efc_jobcard]
-        card_footer = [card.find('efc-card-footer') for card in efc_jobcard]
-        
-        return card_details, card_footer
-
-
-    def time_diff(self, time_now, posted_date):
+    def time_diff(self, posted_date):
         nw = time_now
         pdt = posted_date
 
@@ -63,90 +56,47 @@ class jobScrape():
 
         diff = time1 - time2
         mins, sec = divmod(diff.total_seconds(), 60)
-
         return mins
-
-    def job_match(self, data, job):
-        for i in range(0, len(data)):
-            if data[i]['title'] == job:
-                start_i = i
-        return start_i
-
-
-    def post_date(self, page, job):
-        posted_mins = self.hr_posted * 60
-
-        if page == 1:
-            time_now = self.time_now
-            diff_mins = 0
-            job_title, posted_date = [], []
-
-        pg_url = self.api_url(page)
-        data = requests.get(pg_url).json()['data']
-
-        start_i = self.job_match(data, job)
-
-        for i in range(start_i, len(data)):
-            if diff_mins > posted_mins: break
-
-            posted_on = parser.parse(data[i]['postedDate'])
-            diff_mins =  round(self.time_diff(time_now, posted_on), 2)
-            
-            posted_date.append(posted_on)
-            job_title.append(data[i]['title'])
-        
-        return job_title, posted_date
-
     
+
     def first_page(self):
         jobcard = self.job_card()
-        card_det, card_ftr = jobcard[0], jobcard[1]
 
         job_title, company, job_link, location, position_type, work_arrangement, salary = [], [], [], [], [], [], []
         job_dct = {}
 
-        pg = 1
-        for item in card_det:            
-            # check post_date if within last_hr, match with the initial job title
-            #job_tmp = # GET BACK HERE
-
-            job_title.append(item.find('a').get('title'))
-            company.append(item.find_all('div')[3].text.lstrip().rstrip())
+        for item in jobcard:
+            job_title.append(item.find('h3').text)
+            company.append(item.find('div', {'class': 'font-body-3'}).text.lstrip().rstrip())
             job_link.append(item.find('a').get('href'))
-            location.append(item.find('span' , {'class': 'dot-divider'}).text)
-            position_type.append(item.find('span' , {'class': 'dot-divider ng-star-inserted'}).text)
-        
-        for item in card_ftr:
-            ln1 = len(item.find_all('div')[1])
-            ln2 = len(item.find_all('div')[1].find_all('span'))
-        
-            if ln1 == 6 and ln2 == 2:
-                work_arrangement.append(item.find_all('div')[1].find_all('span')[0].text)
-                salary.append(item.find_all('div')[1].find_all('span')[1].text)
-            elif (ln1 == 5 and ln2 == 1) or (ln1 == 7 and ln2 == 2):
-                work_arrangement.append(None)
-                salary.append(item.find_all('div')[1].find_all('span')[0].text)
-        
+            location.append(item.find('span', {'class': 'dot-divider'}).text)
+            position_type.append(item.find('span', {'class': 'dot-divider ng-star-inserted'}).text)
+
+            try: work_arrangement.append(item.find('span', {'class': 'dot-divider-after ng-star-inserted'}).text)
+            except: work_arrangement.append(None)
+
+            try: salary.append(item.find('span', {'class': 'dot-divider-after last-job-criteria ng-star-inserted'}).text)
+            except: salary.append(None)
+
         job_dct = {"Position": job_title, "Company": company, "Link": job_link, "Location": location, "Position Type": position_type,
-                   "Work Arrangement": work_arrangement, "Salary": salary}
+                "Work Arrangement": work_arrangement, "Salary": salary}
         final_df = pd.DataFrame(job_dct)
-
         return final_df
-    
 
-    def next_page(self, last_hr):
+
+    def next_page(self):
         job_title, company, job_link, location, position_type, work_arrangement, salary = [], [], [], [], [], [], []
         job_dct = {}
         
         diff_mins = 0
         for pg in range(1, 100):
-            if diff_mins > last_hr: break
+            if diff_mins > self.min_posted: break
+
             pg_url = self.api_url(pg)
             data = requests.get(pg_url).json()['data']
 
-
             for i in range(0, len(data)):
-                if diff_mins > last_hr: break
+                if diff_mins > self.min_posted: break
                 
                 posted_date = parser.parse(data[i]['postedDate'])
                 diff_mins =  round(self.time_diff(posted_date) / 60, 2)
@@ -168,20 +118,21 @@ class jobScrape():
         job_dct = {"Position": job_title, "Company": company, "Link": job_link, "Location": location, "Position Type": position_type,
                     "Work Arrangement": work_arrangement, "Salary": salary}
         final_df = pd.DataFrame(job_dct)
-
         return final_df
     
 
+
     def get_data(self):
         data_1st = self.first_page()
+        data_next = self.next_page()
 
-
-        return data_1st
+        return data_next
 
 
 if __name__ == '__main__':
-    hr_posted = 1
+    hr_posted = 2
+    time_now = dt.datetime.now().astimezone(pytz.utc)
 
-    test = jobScrape(hr_posted).first_page()
+    test = jobScrape(time_now, hr_posted).get_data()
 
     print(test)
