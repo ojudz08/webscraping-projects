@@ -6,8 +6,11 @@
 """
 
 from bs4 import BeautifulSoup
-import requests
+import requests, yaml, pytz
+import datetime as dt
+from dateutil import parser
 import pandas as pd
+
 
 class jobScrape():
 
@@ -37,7 +40,7 @@ class jobScrape():
         jobcard = self.job_card()
         card_det, card_ftr = jobcard[0], jobcard[1]
 
-        job_title, company, job_link, location, position_type, work_arrangement, salary, posted_on = [], [], [], [], [], [], [], []
+        job_title, company, job_link, location, position_type, work_arrangement, salary = [], [], [], [], [], [], []
         job_dct = {}
 
         for item in card_det:
@@ -57,14 +60,39 @@ class jobScrape():
             elif (ln1 == 5 and ln2 == 1) or (ln1 == 7 and ln2 == 2):
                 work_arrangement.append(None)
                 salary.append(item.find_all('div')[1].find_all('span')[0].text)
-
-            posted_on.append(item.find('efc-job-meta').text.lstrip().rstrip())
         
         job_dct = {"Position": job_title, "Company": company, "Link": job_link, "Location": location, "Position Type": position_type,
-                   "Work Arrangement": work_arrangement, "Salary": salary, "Posted On": posted_on}
+                   "Work Arrangement": work_arrangement, "Salary": salary}
         final_df = pd.DataFrame(job_dct)
 
         return final_df
+    
+
+    def time_diff(self, nw, pdt):
+        time1 = dt.datetime(nw.year, nw.month, nw.day, nw.hour, nw.minute, nw.second)
+        time2 = dt.datetime(pdt.year, pdt.month, pdt.day, pdt.hour, pdt.minute, pdt.second)
+
+        diff = time1 - time2
+        mins, sec = divmod(diff.total_seconds(), 60)
+
+        return mins
+    
+
+    def api_url(pg):
+        with open("vars.yaml", "r") as f:
+            vars = yaml.load(f, Loader = yaml.FullLoader)
+
+        url = ""
+        iter = 0
+        for key, val in vars.items():
+            if iter == 0: pass
+            elif iter == 4: url += val + str(pg) + "&"
+            else: url += val
+
+            iter += 1
+
+        return url
+
 
 
 
