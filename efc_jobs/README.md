@@ -4,14 +4,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-<h1 align="center">PDF Splitter</h1>
+<h1 align="center">eFinancial Careers Job Details Webscraper</h1>
 </div>
 
 
 <!-- ABOUT PROJECT -->
 ### About Project
 
-Splits the pdf.
+Scrapes the job details from efinancialcareers UK for the past week and save it.
 
 ### What are the pre-requisites?
 

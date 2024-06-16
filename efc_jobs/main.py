@@ -5,6 +5,8 @@
     About 
 """
 
+import os, sys
+from tkinter.filedialog import *
 from bs4 import BeautifulSoup
 import requests, yaml, pytz
 import datetime as dt
@@ -15,6 +17,7 @@ import pandas as pd
 class jobScrape():
 
     def __init__(self, time_now, hr_posted):
+        self.init_dir = os.path.abspath(os.path.dirname(sys.argv[0]))
         self.url = "https://www.efinancialcareers.co.uk/jobs/in-United-Kingdom"
         self.min_posted = hr_posted * 60
         self.time_now = time_now
@@ -162,18 +165,19 @@ class jobScrape():
 
         diff_mins = self.time_diff(data_1st.iloc[-1, -1])
         if diff_mins > self.min_posted: 
-            return data_1st
+            result = data_1st
         else:
             data_next = self.next_page()
             result = pd.concat([data_1st, data_next]).reset_index().drop('index', axis=1)
-            return result
+        
+        result.to_parquet("efc_JobSummary.parquet")
 
 
 if __name__ == '__main__':
-    hr_posted = 5
+    hr_posted = 2.1
     time_now = dt.datetime.now().astimezone(pytz.utc)
 
     test = jobScrape(time_now, hr_posted).get_data()
 
-    print(test)
+    print("Done")
 
