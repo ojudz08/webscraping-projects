@@ -62,14 +62,14 @@ class jobScrape():
         return mins
 
 
-    def posted_date(self, job, page):
+    def posted_date(self, job_tmp, page):
         pg_url = self.api_url(page)
         data = requests.get(pg_url).json()['data']
 
         for i in range(0, len(data)):
-            if job == data[i]['title']:
+            if job_tmp == data[i]['title']:
                 posted_date = parser.parse(data[i]['postedDate'])
-                break
+                continue
         
         return posted_date
     
@@ -80,11 +80,11 @@ class jobScrape():
         job_title, company, job_link, location, position_type, work_arrangement, salary, posted_on = [], [], [], [], [], [], [], []
         job_dct = {}
 
-        pg, diff_mins = 1, 0
+        pg, diff_mins, job_tmp = 1, 0, ""
         for item in jobcard:
             if diff_mins > self.min_posted: continue
 
-            job_title.append(item.find('h3').text)
+            job_title.append(item.find('h3', {'class': 'font-subtitle-3-medium ellipsis-2-row ng-star-inserted'}).text)
             
             try: company.append(item.find('div', {'class': 'font-body-3'}).text.lstrip().rstrip())
             except: company.append(None)
@@ -104,7 +104,7 @@ class jobScrape():
             try: salary.append(item.find('span', {'class': 'dot-divider-after last-job-criteria ng-star-inserted'}).text)
             except: salary.append(None)
 
-            job_tmp = item.find('h3').text
+            job_tmp = item.find('h3', {'class': 'font-subtitle-3-medium ellipsis-2-row ng-star-inserted'}).text
             pdt_tmp = self.posted_date(job_tmp, pg)
             posted_on.append(pdt_tmp)
 
@@ -162,22 +162,20 @@ class jobScrape():
 
     def get_data(self):
         data_1st = self.first_page()
-
+        
         diff_mins = self.time_diff(data_1st.iloc[-1, -1])
         if diff_mins > self.min_posted: 
-            result = data_1st
+            return data_1st
         else:
             data_next = self.next_page()
             result = pd.concat([data_1st, data_next]).reset_index().drop('index', axis=1)
-        
-        result.to_parquet("efc_JobSummary.parquet")
+            return result
 
 
 if __name__ == '__main__':
-    hr_posted = 2.1
+    hr_posted = 3
     time_now = dt.datetime.now().astimezone(pytz.utc)
 
-    test = jobScrape(time_now, hr_posted).get_data()
-
-    print("Done")
+    data_df = jobScrape(time_now, hr_posted).get_data()
+    print(data_df)
 

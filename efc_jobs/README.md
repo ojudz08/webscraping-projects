@@ -11,7 +11,7 @@
 <!-- ABOUT PROJECT -->
 ### About Project
 
-Scrapes the job details from efinancialcareers UK for the past week and save it.
+Scrapes the job details from efinancialcareers UK for the last 24 hours and save it.
 
 ### What are the pre-requisites?
 
