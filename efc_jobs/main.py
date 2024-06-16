@@ -71,7 +71,6 @@ class jobScrape():
             if data[i]['title'] == job:
                 start_i = i
         return start_i
-                
 
 
     def post_date(self, page, job):
@@ -98,15 +97,6 @@ class jobScrape():
         
         return job_title, posted_date
 
-
-    def first_page1(self):
-        pg = 1
-        job = "Corporate Risk Solutions - Relationship Manager"
-        test = self.post_date(pg, job)
-
-        return test
-
-
     
     def first_page(self):
         jobcard = self.job_card()
@@ -118,7 +108,7 @@ class jobScrape():
         pg = 1
         for item in card_det:            
             # check post_date if within last_hr, match with the initial job title
-            job_tmp = # GET BACK HERE
+            #job_tmp = # GET BACK HERE
 
             job_title.append(item.find('a').get('title'))
             company.append(item.find_all('div')[3].text.lstrip().rstrip())
@@ -192,7 +182,6 @@ class jobScrape():
 if __name__ == '__main__':
     hr_posted = 1
 
-    test = jobScrape(hr_posted).first_page1()
+    test = jobScrape(hr_posted).first_page()
 
-    print(test[0])
-    print(test[1])
+    print(test)
