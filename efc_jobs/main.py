@@ -126,7 +126,7 @@ class jobScrape():
         data_1st = self.first_page()
         data_next = self.next_page()
 
-        return data_next
+        return data_1st
 
 
 if __name__ == '__main__':
