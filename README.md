@@ -18,7 +18,7 @@
 </tr>
 <tr>
    <td>eFinancialCareers</td>
-   <td>Scrape the following job details posted in efinancialcareers for the last 3 days:
+   <td>Scrape the following job details posted in efinancialcareers for the last 24 hours:
    
     - Job Title
     - Company Name
@@ -26,6 +26,7 @@
     - Position Type
     - Work Arrangement
     - Salary
+    - Posted Date
 
    </td>
    <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/efc_jobs">efc_jobs</a></td>
