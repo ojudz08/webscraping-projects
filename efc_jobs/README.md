@@ -53,8 +53,6 @@ Scraped 307 job titles for the last 24 hours.
 
    <img src="img/image3.png" alt="drawing" width="1000"/>
 
-
-
 ### Limitations
 
 Beautifulsoup has limited capability in scraping websites with show more button (or infinite scroll). This api_url function is added to parse the job details directly from the api url. 
