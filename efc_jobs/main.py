@@ -67,7 +67,7 @@ class jobScrape():
                 posted_date = parser.parse(data[i]['postedDate'])
 
         return posted_date
-                
+
 
     def first_page(self):
         jobcard = self.job_card()
@@ -164,7 +164,6 @@ class jobScrape():
         return final_df
     
 
-
     def get_data(self):
         data_1st = self.first_page()
         
@@ -180,7 +179,7 @@ class jobScrape():
 
 
 if __name__ == '__main__':
-    hr_posted = 6
+    hr_posted = 24
     time_now = dt.datetime.now().astimezone(pytz.utc)
 
     data_df = jobScrape(time_now, hr_posted).get_data()
