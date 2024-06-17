@@ -22,6 +22,7 @@ Scrapes the job details from efinancialcareers UK for the last 24 hours:
 - Posted Date (in utc)
 
 
+
 ### What are the pre-requisites?
 
 ```Python version 3.11.9```
@@ -33,6 +34,8 @@ Install the needed libraries.
 ```
 python -m pip install -r requirements.txt
 ```
+
+
 
 ### What the job site looks like before running the script
 
@@ -49,6 +52,7 @@ This is what the job site looks like before running the script. The first job en
 Scraped 307 job titles for the last 24 hours.
 
    <img src="img/image3.png" alt="drawing" width="1000"/>
+
 
 
 ### Limitations
@@ -72,8 +76,12 @@ def api_url(self, pg):
    return url
 ```
 
+
+
 ### Next update
 Will put the data into a dashboard.
+
+
 
 <!-- CONTACT -->
 ### Disclaimer
