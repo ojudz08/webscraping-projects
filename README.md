@@ -5,7 +5,8 @@
 </div>
 
 <h2>About</h2>
-<p>Scraping data from different websites</p>
+<p>This is a new web scraping projects with LLM</p>
+<p>Previous web scraping projects are already in <a class="externalLink" href="">archive</a>.</p>
 
 
 <h2>Project Lists</h2>
