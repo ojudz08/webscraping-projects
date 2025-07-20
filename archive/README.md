@@ -5,8 +5,7 @@
 </div>
 
 <h2>About</h2>
-<p>This is a new web scraping projects with LLM</p>
-<p>Previous web scraping projects are already in <a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/archive">archive</a>.</p>
+<p>Web scraping projects back in 2022</p>
 
 
 <h2>Project Lists</h2>
@@ -32,6 +31,18 @@
    </td>
    <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/efc_jobs">efc_jobs</a></td>
 </tr>
+<tr>
+   <td>Seek</td>
+   <td>Scrape data engineering jobs for the past week [To be updated]</td>
+   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/seek_jobs">seek_jobs</a></td>
+</tr>
+<tr>
+   <td>Reuters</td>
+   <td>Webscrape the latest news - World, Business and Markets [To be updated]</td>
+   <td><a class="externalLink" href=https://github.com/ojudz08/webscraping-projects/tree/main/reuters_news">reuters_news</a></td>
+</tr>
+<tr>
+
 </table>
 
 
