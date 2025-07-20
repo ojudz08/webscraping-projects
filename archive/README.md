@@ -29,17 +29,17 @@
     - Posted Date
 
    </td>
-   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/efc_jobs">efc_jobs</a></td>
+   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/archive/efc_jobs">efc_jobs</a></td>
 </tr>
 <tr>
-   <td>Seek</td>
-   <td>Scrape data engineering jobs for the past week [To be updated]</td>
-   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/seek_jobs">seek_jobs</a></td>
+   <td>Business world news</td>
+   <td>Scrape news from business world</td>
+   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/archive/bw_news">bw_news</a></td>
 </tr>
 <tr>
    <td>Reuters</td>
    <td>Webscrape the latest news - World, Business and Markets [To be updated]</td>
-   <td><a class="externalLink" href=https://github.com/ojudz08/webscraping-projects/tree/main/reuters_news">reuters_news</a></td>
+   <td><a class="externalLink" href="https://github.com/ojudz08/webscraping-projects/tree/main/archive/reuters_news">reuters_news</a></td>
 </tr>
 <tr>
 
